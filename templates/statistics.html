@@ -1,0 +1,25 @@
+{% include 'head.html' %}
+{% load static %}
+
+<div class="row">
+    <h2>Рейтинг населенных пунктов по просмотрам погоды</h2>
+    <table>
+            <thead>
+                <tr>
+                    <th>№</th>
+                    <th>Населенный пункт</th>
+                    <th>Количество просмотров</th>
+                </tr>
+            </thead>
+            <tbody>
+            {% for item in history %}
+                <tr>
+                    <td>{{ forloop.counter }}</td>
+                    <td>{{ item.city }}</td>
+                    <td>{{ item.count }}</td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    <a href="{% url 'home' %}" class="submit-button" style="float: right;">Вернуться</a>
+</div>

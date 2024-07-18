@@ -1,0 +1,17 @@
+*.pyc
+*.DS_Store
+*.egg*
+/dist/
+/.idea
+/docs/_build/
+/node_modules/
+build/
+env
+/staticfiles/
+__pycache__/
+#src
+*.sqlite*
+env/
+venv/
+.env
+/apps/*/migrations/0*

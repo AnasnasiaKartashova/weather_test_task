@@ -1,0 +1,30 @@
+version: '3'
+
+services:
+
+  # Build Gunicorn (WSGI)
+  wsgi:
+     build:
+       context: .
+       dockerfile: Dockerfile
+     image: gpt-app-backend-wsgi:latest
+     command: >
+      sh -c "python manage.py collectstatic --noinput &&
+             python3 manage.py makemigrations &&
+             python3 manage.py migrate &&
+             python3 manage.py test -v 2 &&
+             gunicorn config.wsgi:application --bind 0.0.0.0:8000 --access-logfile -"
+     volumes:
+       - ./logs/wsgi_docker/:/config/logs/
+     restart: always
+     ports:
+       - "8000:8000"
+
+  # Build nginx
+  nginx:
+    build: ./nginx
+    ports:
+      - "8080:80"
+    restart: always
+    depends_on:
+      - wsgi

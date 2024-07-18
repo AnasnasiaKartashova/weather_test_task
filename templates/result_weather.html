@@ -1,0 +1,40 @@
+{% include 'head.html' %}
+{% load static custom_func %}
+
+<div class="row">
+    <h2>Погода в населенном пункте {{ city }} на {{ date }}</h2>
+    <p>Температура: {{ temp }} °C</p>
+    <p>Осадки: {{ rain }}</p>
+    <h2>Погода на 5 дней</h2>
+    <table>
+            <thead>
+                <tr>
+                    <th>Дата</th>
+                    <th>Температура (°C)</th>
+                    <th>Осадки</th>
+                </tr>
+            </thead>
+            <tbody>
+           {% zip_lists dates temperatures_max temperatures_min rains as zipped_lists %}
+           {% for date, temperature_max, temperature_min, rain in zipped_lists %}
+            <tr>
+                <td>{{ date }}</td>
+                <td>
+                {% if temperature_max > 0 %}
+                    +{{ temperature_max }}
+                {% else %}
+                    {{ temperature_max }}
+                {% endif %} / 
+                {% if temperature_min > 0 %}
+                    +{{ temperature_min }}
+                {% else %}
+                    {{ temperature_min }}
+                {% endif %}
+                </td>
+                <td>{{ rain }}</td>
+            </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    <a href="{% url 'home' %}" class="submit-button" style="float: right;">Вернуться</a>
+</div>

@@ -1,0 +1,14 @@
+{% include 'head.html' %}
+{% load static %}
+
+<div class="row">
+    <h1>Узнайте погоду сейчас из любой точки мира!</h1>
+        <form method="post" action="{% url 'get_weather' %}">
+        {% csrf_token %}
+            <div class="input-container">
+                <input type="text" name="city" placeholder="Введите город..." class="input-field">
+                <button type="submit" class="submit-button">Искать</button>
+            </div>
+        </form>
+        <p style="color: #570808">{{ error_message }}</p>
+    </div>
